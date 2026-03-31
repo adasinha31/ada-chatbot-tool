@@ -52,24 +52,26 @@ For example:
 
 
 def generate_sql_query(question):
-    chat_completion = client_sql.chat.completions.create(
-        messages=[
-            {
-                "role": "system",
-                "content": sql_prompt,
-            },
-            {
-                "role": "user",
-                "content": question,
-            }
-        ],
-        model=os.environ['GROQ_MODEL'],
-        temperature=0.2,
-        max_tokens=1024
-    )
+    try:
+        chat_completion = client_sql.chat.completions.create(
+            messages=[
+                {
+                    "role": "system",
+                    "content": sql_prompt,
+                },
+                {
+                    "role": "user",
+                    "content": question,
+                }
+            ],
+            model=os.environ['GROQ_MODEL'],
+            temperature=0.2,
+            max_tokens=1024
+        )
 
-    return chat_completion.choices[0].message.content
-
+        return chat_completion.choices[0].message.content
+    except Exception as e:
+        raise Exception(f"Error generating SQL query: {e}")
 
 
 def run_query(query):
@@ -126,5 +128,4 @@ if __name__ == "__main__":
     answer = sql_chain(question)
     print (answer)
 
-    #df = run_query(sql_query)
 

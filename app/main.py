@@ -4,6 +4,7 @@ from faq import ingest_faq_data , faq_chain
 from pathlib import Path
 from router import router
 from sql import sql_chain
+from general import handle_text
 
 st.title("E-Commerce Chatbot")
 
@@ -16,6 +17,8 @@ def ask(query):
         return faq_chain(query)
     elif route == "sql" :
         return sql_chain(query)
+    elif route == "general" :
+        return handle_text(query)
     else :
         return (f" Route {route}  not implemented yet")
 

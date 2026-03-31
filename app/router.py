@@ -31,10 +31,22 @@ sql = Route(
     ],
     score_threshold=0.2
 )
+general = Route(
+    name = 'general',
+    utterances= [
+        "Hii" ,
+        "How are you?",
+        "Doing great"
+        "How is your day?"
+    ],
+    score_threshold=0.2
+           
+)
 
-router = SemanticRouter(routes=[faq, sql], encoder=encoder,auto_sync="local")
+router = SemanticRouter(routes=[faq, sql,general], encoder=encoder,auto_sync="local")
 router.score_threshold=0.2
 
 if __name__ == "__main__":
     print(router("What is your policy on defective product?").name)
     print(router("Pink Puma shoes in price range 5000 to 1000").name)
+    print(router("Hiii, how are you?").name)
